@@ -2,6 +2,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView, Image } from 'react-native'
 import { Divider } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native' 
 
 import { IMG_LOGO, COLOR_PRIMARY } from '../../constants'
 
@@ -20,11 +21,12 @@ export default function Login(){
 }
 
 const CreateAccount = () => {
+    const navigation = useNavigation()
     return (
         <Text
             style={styles.textRegister}>
             ¿Aun no tienes una cuenta?
-            <Text style={styles.register} onPress={() => console.log('registro')}> Registrate</Text>
+            <Text style={styles.register} onPress={() => navigation.navigate("register-stack")}> Registrate</Text>
         </Text>
     )
 }
