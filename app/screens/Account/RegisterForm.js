@@ -1,14 +1,18 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
-import { Input, Icon, Button } from 'react-native-elements'
+import { Input, Button } from 'react-native-elements'
+import Loading from '../../components/Loading'
 import { COLOR_PRIMARY } from '../../constants'
 import { formRegisterValidate } from '../../utils/validations'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { useNavigation } from '@react-navigation/native'
 
 export default function RegisterForm (props) {
     const { toastRef } = props
     const [formData, setFormData] = useState(defaultValueForm())
     const auth = getAuth();
+    const navigation = useNavigation()
+    const [loading, setLoading] = useState(false);
     
     const onSubmit = () => {
         const { isValidForm, errorType } = formRegisterValidate(formData)        
@@ -16,9 +20,18 @@ export default function RegisterForm (props) {
         if (!isValidForm) {
             toastRef.current.show(errorType)
         } else {
+            setLoading(true)
             createUserWithEmailAndPassword(auth, formData.email, formData.password)
-                .then(response => console.log(response))
-                .catch(error => console.log('ERROOOOOOR',error))
+                .then(response => {
+                    console.log(response)
+                    setLoading(false)
+                    navigation.navigate("account-stack")
+                })
+                .catch(() => {
+                    setLoading(false)
+                    toastRef.current.show("Este email ya está en uso, por favor prueba con otro.")
+                })
+                
         }
     }
 
@@ -53,6 +66,7 @@ export default function RegisterForm (props) {
                 buttonStyle={styles.btnRegister}
                 onPress={onSubmit}
             />
+            <Loading isVisible={loading} />
         </View>
     )
 }
