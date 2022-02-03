@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Icon } from "react-native-elements";
-// import { firebaseApp } from "../../service/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 import { COLOR_PRIMARY, COLOR_WHITE } from "../../constants";
 
 export default function Restaurants() {
   const [user, setUser] = useState(null);
   const auth = getAuth();
+  const navigation = useNavigation();
 
   useEffect(() => {
     onAuthStateChanged(auth, (info) => {
@@ -27,6 +28,7 @@ export default function Restaurants() {
           color={COLOR_PRIMARY}
           reverse
           containerStyle={styles.btnContainer}
+          onPress={() => navigation.navigate("add-restaurant")}
         />
       )}
     </View>
