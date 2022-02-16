@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Chip, Text } from "react-native-elements";
+import { uniqueId } from 'lodash'
 
 const Characteristics = () => {
   return (
@@ -10,7 +11,7 @@ const Characteristics = () => {
         {foodType.map((type, i) => {
           return (
             <Chip
-              id={i}
+              key={uniqueId(i)}
               title={type}
               type="outline"
               containerStyle={styles.chip}
@@ -27,7 +28,7 @@ export default Characteristics;
 const styles = StyleSheet.create({
   container: {
     marginRight: 10,
-    marginLeft: 10,
+    marginLeft: 10    
   },
   title: {
     fontWeight: "bold",
@@ -35,11 +36,12 @@ const styles = StyleSheet.create({
   chip: {
     width: "auto",
     marginRight: 10,
+    marginTop: 10,
   },
   chipsContainer: {
-    marginTop: 10,
     flexDirection: "row",
-    maxWidth: 100,
+    height: 'auto',
+    flexWrap: 'wrap',
   },
 });
 

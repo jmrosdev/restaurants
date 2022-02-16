@@ -24,12 +24,12 @@ export default function AddRestaurantForm(props) {
         setRestaurantDescription={setRestaurantDescription}
       />
       <Characteristics />
-      <View style={styles.ratingContainer}>
+      {/* <View style={styles.ratingContainer}>
         <AirbnbRating
           showRating={false}
           onFinishRating={(value) => setRating(value)}
         />
-      </View>
+      </View> */}
       <Button
         title="Crear Restaurante"
         onPress={() => addRestaurant()}
